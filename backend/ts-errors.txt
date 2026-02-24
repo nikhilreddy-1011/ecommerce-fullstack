@@ -1,0 +1,13 @@
+﻿src/controllers/product.controller.ts(22,32): error TS2694: Namespace '"mongoose"' has no exported member 'FilterQuery'.
+src/controllers/product.controller.ts(244,55): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | Uint8Array<ArrayBufferLike> | ObjectId | ObjectIdLike | undefined'.
+      Type 'string[]' is not assignable to type 'string | Uint8Array<ArrayBufferLike> | ObjectId | ObjectIdLike | undefined'.
+        Type 'string[]' is missing the following properties from type 'Uint8Array<ArrayBufferLike>': BYTES_PER_ELEMENT, buffer, byteLength, byteOffset, and 3 more.
+src/controllers/product.controller.ts(288,62): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | Uint8Array<ArrayBufferLike> | ObjectId | ObjectIdLike | undefined'.
+      Type 'string[]' is not assignable to type 'string | Uint8Array<ArrayBufferLike> | ObjectId | ObjectIdLike | undefined'.
+        Type 'string[]' is missing the following properties from type 'Uint8Array<ArrayBufferLike>': BYTES_PER_ELEMENT, buffer, byteLength, byteOffset, and 3 more.
+src/validators/product.schema.ts(20,23): error TS2353: Object literal may only specify known properties, and 'required_error' does not exist in type '{ error?: string | $ZodErrorMap<$ZodIssueInvalidType<unknown>> | undefined; message?: string | undefined; }'.
+src/validators/product.schema.ts(24,19): error TS2554: Expected 2-3 arguments, but got 1.
