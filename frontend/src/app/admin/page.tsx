@@ -64,7 +64,7 @@ export default function AdminDashboard() {
 
     const fetchStats = useCallback(async () => {
         const { data } = await api.get('/admin/stats');
-        setStats(data.data);
+        setStats(data.stats);
     }, []);
 
     const fetchUsers = useCallback(async () => {
@@ -75,7 +75,7 @@ export default function AdminDashboard() {
 
     const fetchProducts = useCallback(async () => {
         const { data } = await api.get('/admin/products?limit=20');
-        setProducts(data.data.products);
+        setProducts(data.products);
     }, []);
 
     useEffect(() => {
