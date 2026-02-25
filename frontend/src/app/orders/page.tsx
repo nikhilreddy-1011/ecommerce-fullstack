@@ -45,8 +45,8 @@ export default function OrdersPage() {
         setIsLoading(true);
         try {
             const { data } = await api.get(`/orders/my?page=${page}&limit=10`);
-            setOrders(data.data.orders);
-            setMeta({ page: data.data.page, totalPages: data.data.totalPages });
+            setOrders(data.orders ?? []);
+            setMeta({ page: data.page ?? 1, totalPages: data.totalPages ?? 1 });
         } catch (err: unknown) {
             setError((err as Error).message || 'Failed to load orders');
         } finally {
