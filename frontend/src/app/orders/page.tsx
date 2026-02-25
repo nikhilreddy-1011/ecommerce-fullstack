@@ -97,36 +97,26 @@ export default function OrdersPage() {
                 <h1 className="text-2xl font-bold text-white mb-6">My Orders</h1>
 
                 <div className="space-y-4">
-                    {orders.map((order) => {
-                        const statusCfg = STATUS_CONFIG[order.status] || STATUS_CONFIG.pending;
-                        const StatusIcon = statusCfg.icon;
+  {orders && orders.length > 0 ? (
+    orders.map((order) => {
+      const statusCfg =
+        STATUS_CONFIG[order.status] || STATUS_CONFIG.pending;
+      const StatusIcon = statusCfg.icon;
 
-                        return (
-                            <Link
-                                key={order._id}
-                                href={`/orders/${order._id}`}
-                                className="bg-gray-900 border border-gray-800 rounded-2xl p-5 flex flex-col sm:flex-row gap-4 hover:border-gray-700 transition-all group"
-                            >
-                                {/* Product thumbnails */}
-                                <div className="flex -space-x-2 flex-shrink-0">
-                                    {order.items.slice(0, 3).map((item, i) => (
-                                        <div
-                                            key={i}
-                                            className="relative w-12 h-12 bg-gray-800 rounded-xl overflow-hidden border-2 border-gray-900"
-                                            style={{ zIndex: order.items.length - i }}
-                                        >
-                                            {getProductImage(item) ? (
-                                                <Image
-                                                    src={getProductImage(item)}
-                                                    alt={getProductName(item)}
-                                                    fill
-                                                    className="object-cover"
-                                                    sizes="48px"
-                                                />
-                                            ) : (
-                                                <div className="w-full h-full flex items-center justify-center text-lg">📦</div>
-                                            )}
-                                        </div>
+      return (
+        <Link
+          key={order._id}
+          href={`/orders/${order._id}`}
+          className="bg-gray-900 border border-gray-800 rounded-2xl p-5"
+        >
+          {/* Keep your existing inner order UI here */}
+        </Link>
+      );
+    })
+  ) : (
+    <p className="text-gray-400 text-center">No orders found</p>
+  )}
+</div>
                                     ))}
                                     {order.items.length > 3 && (
                                         <div className="w-12 h-12 bg-gray-800 rounded-xl border-2 border-gray-900 flex items-center justify-center text-xs text-gray-400 font-semibold">
