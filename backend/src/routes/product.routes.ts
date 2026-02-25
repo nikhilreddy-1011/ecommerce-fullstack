@@ -1,4 +1,7 @@
 import { Router } from 'express';
+import multer from 'multer';
+import slugify from 'slugify';
+import cloudinary from '../config/cloudinary';
 import {
     getProducts,
     getProductBySlug,
@@ -10,11 +13,14 @@ import {
     getProductReviews,
     addReview,
 } from '../controllers/product.controller';
+import Product from '../models/Product.model';
 import { validate } from '../middleware/validate.middleware';
 import { protect } from '../middleware/auth.middleware';
 import { authorizeRoles } from '../middleware/role.middleware';
 import { createProductSchema, updateProductSchema } from '../validators/product.schema';
-import { upload } from '../middleware/upload.middleware';
+
+const authorize = authorizeRoles;
+const localUpload = multer({ dest: 'uploads/' });
 
 const router = Router();
 
@@ -28,10 +34,35 @@ router.get('/:id/reviews', getProductReviews);
 router.post(
     '/',
     protect,
-    authorizeRoles('seller', 'admin'),
-    upload.array('images', 5),
-    validate(createProductSchema),
-    createProduct
+    authorize('seller'),
+    localUpload.single('image'),
+    async (req, res) => {
+        try {
+            const { name, description, price, stock, category } = req.body;
+
+            // Generate slug
+            let slug = slugify(name, { lower: true, strict: true, trim: true });
+            const existing = await Product.findOne({ slug });
+            if (existing) slug = `${slug}-${Date.now()}`;
+
+            const result = await cloudinary.uploader.upload(req.file!.path);
+
+            const product = await Product.create({
+                name,
+                slug,
+                description,
+                price: Number(price),
+                stock: Number(stock),
+                category,
+                images: [result.secure_url],
+                seller: (req as any).user._id || (req as any).user.id,
+            });
+
+            res.status(201).json({ success: true, product });
+        } catch (error) {
+            res.status(500).json({ success: false, message: (error as Error).message });
+        }
+    }
 );
 router.put(
     '/:id',
