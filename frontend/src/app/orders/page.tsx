@@ -97,27 +97,41 @@ export default function OrdersPage() {
                 <h1 className="text-2xl font-bold text-white mb-6">My Orders</h1>
 
                 <div className="space-y-4">
-  {orders && orders.length > 0 ? (
-    orders.map((order) => {
-      const statusCfg =
-        STATUS_CONFIG[order.status] || STATUS_CONFIG.pending;
-      const StatusIcon = statusCfg.icon;
+                    {orders.map((order) => {
+                        const statusCfg = STATUS_CONFIG[order.status] || STATUS_CONFIG.pending;
+                        const StatusIcon = statusCfg.icon;
 
-      return (
-        <Link
-          key={order._id}
-          href={`/orders/${order._id}`}
-          className="bg-gray-900 border border-gray-800 rounded-2xl p-5"
-        >
-          {/* Keep your existing inner order UI here */}
-        </Link>
-      );
-    })
-  ) : (
-    <p className="text-gray-400 text-center">No orders found</p>
-  )}
-</div>
-                                    ))}
+                        return (
+                            <Link
+                                key={order._id}
+                                href={`/orders/${order._id}`}
+                                className="group flex items-center gap-4 bg-gray-900 border border-gray-800 rounded-2xl p-5 hover:border-indigo-500/40 transition-colors"
+                            >
+                                {/* Product images thumbnails */}
+                                <div className="flex -space-x-3 flex-shrink-0">
+                                    {order.items.slice(0, 3).map((item, idx) => {
+                                        const imgSrc = getProductImage(item);
+                                        return (
+                                            <div
+                                                key={idx}
+                                                className="w-12 h-12 bg-gray-800 rounded-xl border-2 border-gray-900 overflow-hidden flex-shrink-0"
+                                            >
+                                                {imgSrc ? (
+                                                    <Image
+                                                        src={imgSrc}
+                                                        alt={getProductName(item)}
+                                                        width={48}
+                                                        height={48}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center">
+                                                        <Package size={16} className="text-gray-600" />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
                                     {order.items.length > 3 && (
                                         <div className="w-12 h-12 bg-gray-800 rounded-xl border-2 border-gray-900 flex items-center justify-center text-xs text-gray-400 font-semibold">
                                             +{order.items.length - 3}
