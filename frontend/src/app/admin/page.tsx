@@ -70,7 +70,7 @@ export default function AdminDashboard() {
     const fetchUsers = useCallback(async () => {
         const s = search ? `&search=${encodeURIComponent(search)}` : '';
         const { data } = await api.get(`/admin/users?limit=20${s}`);
-        setUsers(data.data.users);
+        setUsers(data.users);
     }, [search]);
 
     const fetchProducts = useCallback(async () => {
