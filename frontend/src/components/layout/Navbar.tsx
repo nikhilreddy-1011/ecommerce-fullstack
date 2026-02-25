@@ -57,8 +57,8 @@ export default function Navbar() {
                             key={link.href}
                             href={link.href}
                             className={`px-3 py-2 rounded-xl text-sm font-medium transition-colors ${pathname.startsWith(link.href)
-                                    ? 'bg-indigo-600/20 text-indigo-300'
-                                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                                ? 'bg-indigo-600/20 text-indigo-300'
+                                : 'text-gray-400 hover:text-white hover:bg-gray-800'
                                 }`}
                         >
                             {link.label}
@@ -130,7 +130,7 @@ export default function Navbar() {
                         </div>
                     ) : (
                         <Link
-                            href="/auth/login"
+                            href="/login"
                             className="hidden sm:flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-3.5 py-2 rounded-xl transition-colors shadow-md shadow-indigo-900/40"
                         >
                             <User size={14} /> Sign In
@@ -156,8 +156,8 @@ export default function Navbar() {
                             href={link.href}
                             onClick={() => setMobileOpen(false)}
                             className={`block px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${pathname.startsWith(link.href)
-                                    ? 'bg-indigo-600/20 text-indigo-300'
-                                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                                ? 'bg-indigo-600/20 text-indigo-300'
+                                : 'text-gray-400 hover:text-white hover:bg-gray-800'
                                 }`}
                         >
                             {link.label}
@@ -165,7 +165,7 @@ export default function Navbar() {
                     ))}
                     {!isAuthenticated && (
                         <Link
-                            href="/auth/login"
+                            href="/login"
                             onClick={() => setMobileOpen(false)}
                             className="block px-4 py-2.5 rounded-xl text-sm font-medium text-indigo-400 hover:text-indigo-300 hover:bg-gray-800 transition-colors"
                         >
