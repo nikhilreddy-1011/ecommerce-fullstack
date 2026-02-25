@@ -95,7 +95,7 @@ export default function SellerDashboard() {
                         </div>
                     </div>
                     <Link
-                        href="/products/new"
+                        href="/seller/add-product"
                         className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors shadow-lg shadow-indigo-900/40"
                     >
                         <Plus size={15} /> Add Product
