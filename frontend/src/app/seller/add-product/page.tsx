@@ -8,13 +8,20 @@ import toast from 'react-hot-toast';
 export default function AddProductPage() {
   const router = useRouter();
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{
+    name: string;
+    description: string;
+    price: string;
+    stock: string;
+    category: string;
+    image: any;
+  }>({
     name: '',
     description: '',
     price: '',
     stock: '',
     category: '',
-    image: '',
+    image: null,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -25,10 +32,18 @@ export default function AddProductPage() {
     e.preventDefault();
 
     try {
-      await api.post('/products', {
-        ...form,
-        price: Number(form.price),
-        stock: Number(form.stock),
+      const formData = new FormData();
+      formData.append('name', form.name);
+      formData.append('description', form.description);
+      formData.append('price', form.price);
+      formData.append('stock', form.stock);
+      formData.append('category', form.category);
+      if (form.image) {
+        formData.append('image', form.image);
+      }
+
+      await api.post('/products', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       toast.success('Product added successfully!');
@@ -92,10 +107,12 @@ export default function AddProductPage() {
           />
 
           <input
+            type="file"
             name="image"
-            placeholder="Image URL"
-            value={form.image}
-            onChange={handleChange}
+            accept="image/*"
+            onChange={(e) =>
+              setForm({ ...form, image: e.target.files?.[0] })
+            }
             className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2"
           />
 
