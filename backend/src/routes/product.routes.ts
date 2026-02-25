@@ -20,7 +20,7 @@ import { authorizeRoles } from '../middleware/role.middleware';
 import { createProductSchema, updateProductSchema } from '../validators/product.schema';
 
 const authorize = authorizeRoles;
-const localUpload = multer({ dest: 'uploads/' });
+const localupload = multer({ dest: 'uploads/' });
 
 const router = Router();
 
@@ -35,7 +35,7 @@ router.post(
     '/',
     protect,
     authorize('seller'),
-    localUpload.single('image'),
+    localupload.single('image'),
     async (req, res) => {
         try {
             const { name, description, price, stock, category } = req.body;
@@ -68,7 +68,7 @@ router.put(
     '/:id',
     protect,
     authorizeRoles('seller', 'admin'),
-    upload.array('images', 5),
+    localupload.array('images', 5),
     validate(updateProductSchema),
     updateProduct
 );
