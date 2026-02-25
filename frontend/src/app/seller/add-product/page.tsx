@@ -42,9 +42,7 @@ export default function AddProductPage() {
         formData.append('image', form.image);
       }
 
-      await api.post('/products', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      await api.post('/products', formData,);
 
       toast.success('Product added successfully!');
       router.push('/seller');
