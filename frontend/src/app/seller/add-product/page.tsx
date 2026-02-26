@@ -13,14 +13,12 @@ export default function AddProductPage() {
     description: string;
     price: string;
     stock: string;
-    category: string;
     image: any;
   }>({
     name: '',
     description: '',
     price: '',
     stock: '',
-    category: '',
     image: null,
   });
 
@@ -37,7 +35,6 @@ export default function AddProductPage() {
       formData.append('description', form.description);
       formData.append('price', form.price);
       formData.append('stock', form.stock);
-      formData.append('category', form.category);
       if (form.image) {
         formData.append('image', form.image);
       }
@@ -95,14 +92,7 @@ export default function AddProductPage() {
             required
           />
 
-          <input
-            name="category"
-            placeholder="Category"
-            value={form.category}
-            onChange={handleChange}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2"
-            required
-          />
+
 
           <input
             type="file"

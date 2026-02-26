@@ -6,7 +6,7 @@ export interface IProduct extends Document {
     description: string;
     price: number;
     discountedPrice?: number;
-    category: string;
+
     seller: mongoose.Types.ObjectId;
     images: string[];
     stock: number;
@@ -25,7 +25,7 @@ const ProductSchema = new Schema<IProduct>(
         description: { type: String, required: true },
         price: { type: Number, required: true, min: 0 },
         discountedPrice: { type: Number, min: 0 },
-        category: { type: String, required: true },
+
         seller: { type: Schema.Types.ObjectId, ref: 'User', required: true },
         images: [{ type: String }],
         stock: { type: Number, required: true, default: 0, min: 0 },
@@ -41,6 +41,6 @@ const ProductSchema = new Schema<IProduct>(
 
 // Full-text search index
 ProductSchema.index({ name: 'text', description: 'text' });
-ProductSchema.index({ category: 1, price: 1, 'ratings.average': -1 });
+ProductSchema.index({ price: 1, 'ratings.average': -1 });
 
 export default mongoose.model<IProduct>('Product', ProductSchema);

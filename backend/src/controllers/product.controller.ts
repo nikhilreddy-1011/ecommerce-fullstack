@@ -16,7 +16,7 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
     try {
         const { page, limit, skip, totalPages } = paginate(req);
         const {
-            search, category, minPrice, maxPrice, minRating, sortBy, seller,
+            search, minPrice, maxPrice, minRating, sortBy, seller,
         } = req.query;
 
         // Build dynamic filter
@@ -25,9 +25,7 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
         if (search) {
             filter.$text = { $search: search as string };
         }
-        if (category) {
-            filter.category = { $regex: new RegExp(`^${category as string}$`, 'i') };
-        }
+
         if (seller) {
             filter.seller = new mongoose.Types.ObjectId(seller as string);
         }
@@ -117,7 +115,7 @@ export const getProductById = async (req: Request, res: Response): Promise<void>
 // ─── CREATE PRODUCT ───────────────────────────────────────────────────────────
 export const createProduct = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
-        const { name, description, price, discountedPrice, category, stock, attributes } = req.body;
+        const { name, description, price, discountedPrice, stock, attributes } = req.body;
 
         // Build slug and ensure uniqueness
         let slug = makeSlug(name);
@@ -134,7 +132,6 @@ export const createProduct = async (req: AuthRequest, res: Response): Promise<vo
             description,
             price: Number(price),
             discountedPrice: discountedPrice ? Number(discountedPrice) : undefined,
-            category,
             seller: req.user!.id,
             images,
             stock: Number(stock) || 0,

@@ -38,7 +38,7 @@ router.post(
     localupload.single('image'),
     async (req, res) => {
         try {
-            const { name, description, price, stock, category } = req.body;
+            const { name, description, price, stock } = req.body;
 
             // Generate slug
             let slug = slugify(name, { lower: true, strict: true, trim: true });
@@ -53,7 +53,6 @@ router.post(
                 description,
                 price: Number(price),
                 stock: Number(stock),
-                category,
                 images: [result.secure_url],
                 seller: (req as any).user._id || (req as any).user.id,
             });

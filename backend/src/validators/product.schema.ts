@@ -19,7 +19,7 @@ export const createProductSchema = z.object({
     description: z.string().min(10, 'Description must be at least 10 characters').max(5000),
     price: z.coerce.number().positive('Price must be positive'),
     discountedPrice: z.coerce.number().positive().optional(),
-    category: z.string().min(1, 'Category is required'),
+
     stock: z.coerce.number().int().min(0, 'Stock cannot be negative').default(0),
     attributes: z.record(z.string(), z.unknown()).optional(),
 });
@@ -30,7 +30,7 @@ export const productQuerySchema = z.object({
     page: z.coerce.number().int().positive().default(1),
     limit: z.coerce.number().int().positive().max(100).default(12),
     search: z.string().max(200).optional(),
-    category: z.string().optional(),
+
     minPrice: z.coerce.number().min(0).optional(),
     maxPrice: z.coerce.number().positive().optional(),
     minRating: z.coerce.number().min(0).max(5).optional(),
