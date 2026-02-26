@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import slugify from 'slugify';
 import Product from '../models/Product.model';
 import Review from '../models/Review.model';
+// Rebuild trigger
 import { AuthRequest } from '../middleware/auth.middleware';
 import { sendSuccess, sendError } from '../utils/response.utils';
 import { paginate } from '../utils/paginate.utils';
