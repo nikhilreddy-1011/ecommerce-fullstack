@@ -67,7 +67,7 @@ export default function SellerDashboard() {
             api.get('/seller/orders?limit=10'),
         ]);
         setStats(statsRes.data.data);
-        setProducts(productsRes.data.data.products);
+        setProducts(productsRes.data.products);
         setOrders(ordersRes.data.data.orders);
     }, []);
 
