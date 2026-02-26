@@ -25,7 +25,7 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
             filter.$text = { $search: search as string };
         }
         if (category) {
-            filter.category = new mongoose.Types.ObjectId(category as string);
+            filter.category = { $regex: new RegExp(`^${category as string}$`, 'i') };
         }
         if (seller) {
             filter.seller = new mongoose.Types.ObjectId(seller as string);
@@ -52,7 +52,6 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
 
         const [products, total] = await Promise.all([
             Product.find(filter)
-                .populate('category', 'name slug')
                 .populate('seller', 'name profileImage')
                 .sort(sort)
                 .skip(skip)
@@ -77,7 +76,6 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
 export const getProductBySlug = async (req: Request, res: Response): Promise<void> => {
     try {
         const product = await Product.findOne({ slug: req.params.slug, isActive: true })
-            .populate('category', 'name slug')
             .populate('seller', 'name profileImage')
             .lean();
 
@@ -103,7 +101,6 @@ export const getProductBySlug = async (req: Request, res: Response): Promise<voi
 export const getProductById = async (req: Request, res: Response): Promise<void> => {
     try {
         const product = await Product.findById(req.params.id)
-            .populate('category', 'name slug')
             .populate('seller', 'name profileImage')
             .lean();
         if (!product) {
